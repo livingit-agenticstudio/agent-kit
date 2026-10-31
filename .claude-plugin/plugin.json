@@ -1,6 +1,6 @@
 {
 	"name": "agent-kit",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Works Agentic Studio issues with Claude Code: picks a lane with model and effort, implements test-first, checks before done and blocks destructive git commands.",
 	"author": {
 		"name": "Livingit"

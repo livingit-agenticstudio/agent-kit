@@ -6,19 +6,23 @@ commands. This repo is both the plugin and its marketplace.
 
 ## Install
 
-From the repo you build in:
+From the repo you build in. You need git and no GitHub account:
 
 ```
-claude plugin marketplace add livingit-agenticstudio/agent-kit
+claude plugin marketplace add https://github.com/livingit-agenticstudio/agent-kit.git
 claude plugin install agent-kit@agentic-studio
 claude
 ```
 
-While this repo is private, installing and updating need read access to it with your own git login.
+Use the full address. The short `owner/repo` form tries SSH first, and a developer with no GitHub account has no key.
 
 A repo made by Agentic Studio's onboarding already names the marketplace and enables the plugin in
 `.claude/settings.json`, so Claude Code offers to install it when you trust the folder. The repo also needs the portal's
 MCP server in `.mcp.json` (the portal shows it under "Connect your agent").
+
+To get a new version, run `claude plugin marketplace update agentic-studio`, or use `/plugin`, Marketplaces, Update
+marketplace. A plugin turned on by `.claude/settings.json` is not listed as installed, so `claude plugin update` does not
+apply to it.
 
 ## What is in it
 
@@ -59,8 +63,10 @@ prompt, not a limit on its tools.
 ## Trust
 
 A plugin release runs on your machine: its hook runs before every shell command, and its agents run commands in your
-repo. Only Livingit's maintainers with write access to this repo can publish a release. Releases are tagged
-(`v1.0.1` and on) and raise `version` in `.claude-plugin/plugin.json`; Claude Code updates only when that changes.
+repo. Only Livingit's maintainers with write access to this repo can publish a release. A merge to `main` is a release: a
+new install or a marketplace update gets the head of `main`, and an existing install picks it up when `version` in
+`.claude-plugin/plugin.json` is raised. `main` is protected: changes go through a pull request, with no force push and no
+deletion. Versions are tagged (`v1.0.1` and on).
 
 You decide how updates arrive:
 
