@@ -1,0 +1,16 @@
+{
+	"name": "agentic-studio",
+	"owner": {
+		"name": "Livingit"
+	},
+	"metadata": {
+		"description": "Claude Code plugins for teams that work their issues in Agentic Studio."
+	},
+	"plugins": [
+		{
+			"name": "agent-kit",
+			"source": "./",
+			"description": "Lane choice, implementation agents, checks and git guardrails for Agentic Studio issues."
+		}
+	]
+}
