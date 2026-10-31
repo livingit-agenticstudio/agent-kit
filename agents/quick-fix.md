@@ -1,6 +1,7 @@
 ---
 name: quick-fix
 description: Takes a small, fully specified Agentic Studio issue from ready to a linked pull request, without new tests or rules. Use for the small lane of the choose-lane skill, when the issue says exactly what changes and adds no behaviour, such as interface text, a translation, docs, config or a one-line fix. Hands the issue back when it turns out bigger.
+tools: Bash, Read, Edit, Write, Grep, Glob, Skill, mcp__agentic-studio__get_issue, mcp__agentic-studio__start_work, mcp__agentic-studio__ask_orderer, mcp__agentic-studio__link_pull_request, mcp__agentic-studio__comment, mcp__agentic-studio__list_people_and_terms
 model: haiku
 effort: medium
 ---

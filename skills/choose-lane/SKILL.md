@@ -28,11 +28,12 @@ Otherwise run the start of the flow yourself:
 
 ## 2. Pick the lane
 
-| Lane   | When                                                                                                                                                                                                                                       | Agent         | model / effort                                     |
-| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------- | -------------------------------------------------- |
-| Small  | The issue says exactly what changes and adds no behaviour: text in the interface, a translation, docs, config, a one-line fix                                                                                                             | `quick-fix`   | `haiku` / `medium`                                 |
-| Normal | New or changed behaviour in one part of the code, with clear acceptance criteria                                                                                                                                                           | `feature-dev` | `sonnet` / `medium`                                |
-| Large  | Breaks a public contract or protocol (adding to one is normal); touches sign-in, permissions, secrets or personal data; changes a rule the repo's `AGENTS.md` calls hard; deletes data or folders; spans more than one app; or leaves design open | `feature-dev` | `opus` / `medium`, `high` when it touches security |
+| Lane            | When                                                                                         | Agent                | `model` on the call | Effort (agent file) |
+| --------------- | -------------------------------------------------------------------------------------------- | -------------------- | ------------------- | ------------------- |
+| Small           | Says exactly what changes, adds no behaviour: interface text, a translation, docs, config, a one-line fix | `quick-fix`          | `haiku`             | medium              |
+| Normal          | New or changed behaviour in one part of the code, with clear acceptance criteria             | `feature-dev`        | `sonnet`            | medium              |
+| Large           | Breaks a public contract or protocol (adding to one is normal), changes a rule the repo's `AGENTS.md` calls hard, deletes data or folders, spans more than one app, or leaves design open | `feature-dev`        | `opus`              | medium              |
+| Large, security | Large, and touches sign-in, permissions, secrets or personal data                            | `feature-dev-secure` | `opus`              | high                |
 
 - Between two lanes, take the higher one.
 - The developer can name the lane ("build 42 as small"), and that wins.
@@ -43,9 +44,9 @@ page, clear criteria."
 
 ## 3. Start the agent
 
-Start the agent with the Agent tool: `subagent_type` `agent-kit:quick-fix` or `agent-kit:feature-dev`, and both `model`
-and `effort` from the table. If your Agent tool has no `effort` field, the agent's own default applies; still set
-`model`.
+Start the agent with the Agent tool: `subagent_type` `agent-kit:quick-fix`, `agent-kit:feature-dev` or
+`agent-kit:feature-dev-secure`, and `model` from the table. Do not pass an effort: each agent's effort is fixed in its own
+file (`effort:` in its frontmatter), which is why the security lane is an agent of its own rather than a flag on the call.
 
 The brief, in the prompt:
 
@@ -68,9 +69,10 @@ The brief, in the prompt:
 When the pull request is open, have it read once in a fresh context, by an agent that did not write it:
 
 - The repo has an `issue-reviewer` agent (the starter kit puts it in `.claude/agents/`): start it with the issue number.
-- Otherwise start a general-purpose agent, read only, with the issue number. It reads the issue with `get_issue`, the
-  branch's diff against the default branch, and `REVIEW.md` when the repo has one, and reports what does not meet the
-  issue or the repo's rules, with file and line.
+- Otherwise start a general-purpose agent with the issue number and tell it to read only. That is an instruction in
+  its prompt, not a limit on its tools, so say it plainly: do not edit, commit, push or write to the issue. It reads the
+  issue with `get_issue`, the branch's diff against the default branch, and `REVIEW.md` when the repo has one, and
+  reports what does not meet the issue or the repo's rules, with file and line.
 
 Send the findings worth fixing to an agent of the same lane for one fix round on the same branch. Say which findings you
 left and why.

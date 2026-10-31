@@ -16,7 +16,8 @@ order. Version 1.0.0 of the plugin.
 2. **Lane.** The issue names the exact text and the places, and adds no behaviour. Nothing in the large column applies.
    Small.
 3. Line to the developer: "Issue 12 goes as small: two texts, exact wording given."
-4. Agent call: `subagent_type: agent-kit:quick-fix`, `model: haiku`, `effort: medium`. The brief holds the issue's
+4. Agent call: `subagent_type: agent-kit:quick-fix`, `model: haiku`; effort medium comes from the
+   agent's own file. The brief holds the issue's
    text, "already started", and the pointer `messages/en.json`, keys `nav_notes` and `notes_title`.
 5. `quick-fix` reads `AGENTS.md` (absent in the kit) and `docs/getting-started.md`, makes the worktree
    `../acme-app-12` on `fix/12-meeting-notes`, changes two values, searches for "Notes" and leaves the other hits with a
@@ -39,7 +40,8 @@ see a new behaviour that needs a test, hand back with that reason and no worktre
 2. **Lane.** New behaviour, in one part of the code (the notes module and its page), with criteria an orderer can test.
    It touches no sign-in or permission: the kit has no sign-in turned on and the issue asks for none. Normal.
 3. Line: "Issue 14 goes as normal: new behaviour in the notes page, clear criteria."
-4. Agent call: `subagent_type: agent-kit:feature-dev`, `model: sonnet`, `effort: medium`. Pointer:
+4. Agent call: `subagent_type: agent-kit:feature-dev`, `model: sonnet`; effort medium from the agent's
+   file. Pointer:
    `src/lib/server/notes/index.ts` (`NoteStore`, `writeNote`) and `notes.test.ts`, the fake in `fake.ts`.
 5. `feature-dev` makes `../acme-app-14` on `feat/14-delete-note` and follows `agent-kit:tdd`. Seams written down first:
    the notes module's public functions and the page's form action. Slice one: a test that a deleted note is not in
@@ -57,9 +59,10 @@ see a new behaviour that needs a test, hand back with that reason and no worktre
 
 1. `get_issue 17`. One comment from the orderer: "Sign-in by email is fine, no SSO for now." `start_work 17`.
 2. **Lane.** It turns on sign-in and adds an ownership check: sign-in and permissions are both in the large column. It
-   touches security. Large, effort high.
-3. Line: "Issue 17 goes as large with high effort: it turns on sign-in and adds an ownership check."
-4. Agent call: `subagent_type: agent-kit:feature-dev`, `model: opus`, `effort: high`. Pointer:
+   touches security. Large, security.
+3. Line: "Issue 17 goes as large, security: it turns on sign-in and adds an ownership check."
+4. Agent call: `subagent_type: agent-kit:feature-dev-secure`, `model: opus`. No effort is passed: high is set in
+   `agents/feature-dev-secure.md`. Pointer:
    `src/lib/server/auth/options.ts`, `docs/engineering/patterns.md#auth`, the notes module.
 5. `feature-dev` writes the seams first (signing in, the notes module with an owner, the page's load and actions), works
    in slices, and runs the checks. It opens the pull request and links it.
@@ -85,5 +88,7 @@ The repo has `.mcp.json` and the plugin enabled, but no `.claude/skills/` and no
 
 ## What this dry run does not show
 
-It is a walk-through, not a recorded run. The agent's real choices on a real issue, and whether `effort` reaches the
-agent in a given Claude Code version, are checked on the first issue a customer team builds with the plugin.
+It is a walk-through, not a recorded run. The agent's real choices on a real issue are checked on the first issue a
+customer team builds with the plugin. Effort is never passed on the Agent call: it sits in each agent's frontmatter
+(`effort: medium`, or `high` in `feature-dev-secure`), which `claude plugin validate --strict` accepts. That a run
+actually used that effort has not been observed.

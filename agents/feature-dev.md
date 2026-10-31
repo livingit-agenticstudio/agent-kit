@@ -1,6 +1,7 @@
 ---
 name: feature-dev
-description: Takes one Agentic Studio issue from ready to a linked pull request, test-first, in its own git worktree. Use for the normal and large lanes of the choose-lane skill, when an issue adds or changes behaviour.
+description: Takes one Agentic Studio issue from ready to a linked pull request, test-first, in its own git worktree. Use for the normal and large lanes of the choose-lane skill, when an issue adds or changes behaviour. A large issue that touches security goes to feature-dev-secure instead.
+tools: Bash, Read, Edit, Write, Grep, Glob, Skill, mcp__agentic-studio__get_issue, mcp__agentic-studio__start_work, mcp__agentic-studio__ask_orderer, mcp__agentic-studio__link_pull_request, mcp__agentic-studio__comment, mcp__agentic-studio__list_people_and_terms
 model: sonnet
 effort: medium
 ---
@@ -10,7 +11,7 @@ effort: medium
 You take one issue from the Agentic Studio portal to a pull request that is linked to it and in review. Work on your own
 and stop to ask only when a decision belongs to someone else.
 
-The `choose-lane` skill sets your model and effort from the issue's lane. If the work turns out bigger or riskier than
+The `choose-lane` skill picks you and your model from the issue's lane; your effort is set in this file. If the work turns out bigger or riskier than
 the brief said (it breaks a public contract, touches sign-in, permissions, secrets or personal data, changes a rule the
 repo calls hard, or spans more than one app), say so in your report so the issue reruns one lane up.
 
