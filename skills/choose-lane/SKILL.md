@@ -6,8 +6,9 @@ description: Pick the lane for an Agentic Studio issue (small, normal or large) 
 # Choose a lane
 
 You decide how much model and effort an issue needs, start the agent that builds it, and have its work read once by
-someone who did not write it. The issue lives in the Agentic Studio portal and you reach it only through the
-`agentic-studio` MCP tools. The code and the pull request live in this repo.
+someone who did not write it. The issue lives in the customer's issues repo on GitHub, and you reach it only through
+the `agentic-studio` MCP tools; Agentic Studio shows the address under Agenter. The code and the pull request live in
+this repo.
 
 ## 1. Get the issue
 
@@ -17,14 +18,15 @@ so `work-an-issue` has nothing left to do after you.
 
 Otherwise run the start of the flow yourself:
 
-1. **Pick.** Take the issue you were given. Without one, `list_my_work` shows what is assigned to you. Ready issues meant
-   for an agent that nobody has taken show with `list_issues` (state `ready`, for whom `agent`). When several fit, ask
-   the developer which.
-2. **Read.** `get_issue`, and read every comment: the orderer's answers are there. When a requirement is unclear,
-   `ask_orderer` with one focused question and what you would do if the answer is "no preference". Do not start an
+1. **Pick.** Take the issue you were given. Without one, `list_issues` with the developer's GitHub username as
+   `assignee` shows what is theirs, and with `label` `ready-for-agent` what is ready for an agent; take one nobody is
+   assigned to. When several fit, ask the developer which.
+2. **Read.** `get_issue`, and read every comment: answers to earlier questions are there. When a requirement is
+   unclear, `comment` with one focused question and what you would do if the answer is "no preference", then
+   `update_issue` to give it `needs-info` in place of its other state label, and tell the developer. Do not start an
    agent on what the answer decides.
-3. **Start.** `start_work` assigns the issue to you and moves it to in progress. It works only on a ready issue. If it
-   refuses, the issue is not ready: say so and stop. An issue already in progress and assigned to you goes on as it is.
+3. **Start.** `start_work` assigns the issue to the developer, which is what makes it started. If it refuses, say why
+   and stop. An issue already assigned to the developer goes on as it is.
 
 ## 2. Pick the lane
 
@@ -62,7 +64,8 @@ The brief, in the prompt:
 - `feature-dev` stays red after three attempts, or reports that the change touches a large trigger: start it again one
   lane up rather than patching on the cheaper lane.
 - On the large lane and still red: stop and tell the developer what failed, with the output.
-- The agent asks a question the orderer must answer: `ask_orderer`, then stop until the answer is in the issue.
+- The agent asks a question someone else must answer: it is in a comment on the issue. Give the issue `needs-info`
+  with `update_issue`, tell the developer, and stop until the answer is in the issue.
 
 ## 5. One review round
 
@@ -79,12 +82,11 @@ left and why.
 
 ## 6. Hand over
 
-The agent has linked the pull request with `link_pull_request`, which moved the issue to in review, and has commented
-what changed and how to test it. Check both with `get_issue`. Then stop: a person tests the work and decides in the
-portal.
+The agent has linked the pull request with `link_pull_request` and has commented what changed and how to test it. Check
+both with `get_issue`. Then stop: a person on the team tests the work and decides when to merge.
 
 ## What you never do
 
-You never approve, send back, answer or close an issue. There is no tool for it and you do not look for a way: the
-orderer or a developer does it in the portal. Whether and when to merge is the developer's decision under the repo's own
-rules. Speak of an issue's state in the portal's words (ready, in progress, in review), as the MCP tools return them.
+You never close, reopen or delete an issue, and never add or remove the label `official`: it decides what the customer
+sees, and a person on the team sets it. There is no tool for it and you do not look for a way. Merging the pull request
+closes the issue, and whether and when to merge is the developer's decision under the repo's own rules.

@@ -16,9 +16,12 @@ claude
 
 Use the full address. The short `owner/repo` form tries SSH first, and a developer with no GitHub account has no key.
 
-A repo made by Agentic Studio's onboarding already names the marketplace and enables the plugin in
-`.claude/settings.json`, so Claude Code offers to install it when you trust the folder. The repo also needs the portal's
-MCP server in `.mcp.json` (the portal shows it under "Connect your agent").
+The agents also need Agentic Studio's MCP server for the customer you work for. Studio shows its address and the
+`claude mcp add` command under **Agenter**, for each customer you are assigned to. Claude Code opens the browser the
+first time, and you sign in with your Studio account.
+
+A team can also name the marketplace and enable the plugin in the repo's `.claude/settings.json`, so Claude Code offers
+to install it when you trust the folder.
 
 To get a new version, run `claude plugin marketplace update agentic-studio`, or use `/plugin`, Marketplaces, Update
 marketplace. A plugin turned on by `.claude/settings.json` is not listed as installed, so `claude plugin update` does not
@@ -47,7 +50,8 @@ lane, and one through a repo without the starter kit.
 
 ## With and without the starter kit
 
-The starter kit's own `work-an-issue`, `write-an-issue` and `issue-reviewer` belong to the team and stay in the repo.
+The [starter kit](https://github.com/livingit-agenticstudio/starter-kit) is a template for a new app repo. Its own
+`work-an-issue`, `write-an-issue` and `issue-reviewer` belong to the team and stay in the repo.
 When `work-an-issue` reaches its Build step, `choose-lane` takes over. Without the kit, `choose-lane` runs the whole flow
 with the same MCP tools, and the repo's `AGENTS.md` or `CLAUDE.md` gives the commands, the checks and the code host.
 Without an `issue-reviewer`, the review is a general-purpose agent told to only read: that is an instruction in its
@@ -55,7 +59,8 @@ prompt, not a limit on its tools.
 
 ## What it will not do
 
-- Approve, send back, answer or close an issue. A person does that in the portal.
+- Close an issue or show an initiative to the customer. Merging the pull request closes the issue, and a person on the
+  team decides what the customer sees.
 - Merge. When to merge is the team's decision under the repo's own rules.
 - Change anything in your repo when it updates.
 - Run without Claude Code.

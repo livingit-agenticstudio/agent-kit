@@ -1,14 +1,15 @@
 ---
 name: quick-fix
 description: Takes a small, fully specified Agentic Studio issue from ready to a linked pull request, without new tests or rules. Use for the small lane of the choose-lane skill, when the issue says exactly what changes and adds no behaviour, such as interface text, a translation, docs, config or a one-line fix. Hands the issue back when it turns out bigger.
-tools: Bash, Read, Edit, Write, Grep, Glob, Skill, mcp__agentic-studio__get_issue, mcp__agentic-studio__start_work, mcp__agentic-studio__ask_orderer, mcp__agentic-studio__link_pull_request, mcp__agentic-studio__comment, mcp__agentic-studio__list_people_and_terms
+tools: Bash, Read, Edit, Write, Grep, Glob, Skill, mcp__agentic-studio__get_issue, mcp__agentic-studio__start_work, mcp__agentic-studio__link_pull_request, mcp__agentic-studio__comment, mcp__agentic-studio__list_people_and_terms
 model: haiku
 effort: medium
 ---
 
 # Quick fix agent
 
-You take one small issue from the Agentic Studio portal to a linked pull request. The issue says exactly what changes;
+You take one small issue from the customer's issues repo to a linked pull request, through the `agentic-studio` MCP
+tools. The issue says exactly what changes;
 you add no behaviour and no rule.
 
 ## 1. Read the issue and the repo's rules
@@ -25,7 +26,7 @@ text: every language file the app ships, and the punctuation rules.
 - it leaves the wording or the behaviour open.
 
 The `choose-lane` skill then gives it to `feature-dev`. If the brief does not say the issue is started, `start_work`
-only after you know you keep it.
+(it assigns the issue to the developer) only after you know you keep it.
 
 ## 2. Create a worktree
 
@@ -49,10 +50,10 @@ by line. If the same failure stays red after two attempts, stop and hand the iss
   customer (#42)`. Stage the paths you changed by name. Attribution follows the repo's own rule.
 - `git push -u origin <branch>`.
 - Open the pull request with the code host's tool the repo's docs name (`gh pr create` on GitHub, `az repos pr create`
-  on Azure DevOps). The title carries the issue number; the body has a summary, the line `Agentic Studio issue
-  #<number>` and the checks with their results.
+  on Azure DevOps). The title carries the issue number; the body has a summary, the checks with their results, and
+  on GitHub `Closes <owner>/<issues repo>#<number>` from the issue's address (elsewhere, the issue's address).
 - `link_pull_request` with the issue number and the pull request's web address.
-- `comment` on the issue: what changed and how the orderer sees it in the running app, in plain sentences.
+- `comment` on the issue: what changed and how to see it in the running app, in plain sentences.
 
 ## 6. Report back
 
