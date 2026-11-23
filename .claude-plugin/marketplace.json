@@ -4,7 +4,7 @@
 		"name": "Livingit"
 	},
 	"metadata": {
-		"description": "Claude Code plugins for teams that work their issues in Agentic Studio."
+		"description": "Agent kits for Claude Code, for teams that work their issues in Agentic Studio."
 	},
 	"plugins": [
 		{

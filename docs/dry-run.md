@@ -5,7 +5,7 @@ starter kit. The kit's example page is Notes (`/notes`, `src/lib/server/notes/`,
 `messages/en.json` and `messages/sv.json`). The fourth section runs the same flow in a repo without the kit.
 
 Each section shows what the agent reads, which signal decides the lane, the Agent call it makes and the MCP calls in
-order. Version 1.1.0 of the plugin.
+order. Version 1.1.0 of the agent kit.
 
 ## Small: issue 12, "The menu says Notes, the team calls them Meeting notes"
 
@@ -74,7 +74,7 @@ opens no pull request and reports with the output. `choose-lane` tells the devel
 
 ## Without the starter kit: issue 31 in a repo that had code before
 
-The developer has added the customer's MCP server from Agenter and installed the plugin. The repo has no
+The developer has added the connection (MCP) to the customer from Agenter and installed the agent kit. The repo has no
 `.claude/skills/` and no `docs/getting-started.md`. Issue 31: "The export button also offers CSV."
 
 1. No `work-an-issue` skill is there, so `choose-lane` runs the start itself: `list_issues` with the developer's
@@ -89,6 +89,6 @@ The developer has added the customer's MCP server from Agenter and installed the
 ## What this dry run does not show
 
 It is a walk-through, not a recorded run. The agent's real choices on a real issue are checked on the first issue a
-customer team builds with the plugin. Effort is never passed on the Agent call: it sits in each agent's frontmatter
+customer team builds with the agent kit. Effort is never passed on the Agent call: it sits in each agent's frontmatter
 (`effort: medium`, or `high` in `feature-dev-secure`), which `claude plugin validate --strict` accepts. That a run
 actually used that effort has not been observed.

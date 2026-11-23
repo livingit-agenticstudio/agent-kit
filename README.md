@@ -1,8 +1,8 @@
 # agent-kit
 
-A Claude Code plugin for teams that work their issues in Agentic Studio. It decides how much model and effort an issue
-needs, builds it test-first in its own git worktree, checks the work before it says done, and blocks destructive git
-commands. This repo is both the plugin and its marketplace.
+The agent kit is what you install in Claude Code to work the issues in Agentic Studio the way we do. It decides how
+much model and effort an issue needs, builds it test-first in its own git worktree, checks the work before it says
+done, and blocks destructive git commands. This repo holds the agent kit and its marketplace.
 
 ## Install
 
@@ -16,16 +16,17 @@ claude
 
 Use the full address. The short `owner/repo` form tries SSH first, and a developer with no GitHub account has no key.
 
-The agents also need Agentic Studio's MCP server for the customer you work for. Studio shows its address and the
+The agents also need the connection (MCP) to the customer you work for. It goes from your agent to that customer's work
+in Agentic Studio, and your agent sees only that customer. Studio shows the connection's address and the
 `claude mcp add` command under **Agenter**, for each customer you are assigned to. Claude Code opens the browser the
 first time, and you sign in with your Studio account.
 
-A team can also name the marketplace and enable the plugin in the repo's `.claude/settings.json`, so Claude Code offers
-to install it when you trust the folder.
+A team can also name the marketplace and enable the agent kit in the repo's `.claude/settings.json`, so Claude Code
+offers to install it when you trust the folder.
 
 To get a new version, run `claude plugin marketplace update agentic-studio`, or use `/plugin`, Marketplaces, Update
-marketplace. A plugin turned on by `.claude/settings.json` is not listed as installed, so `claude plugin update` does not
-apply to it.
+marketplace. An agent kit turned on by `.claude/settings.json` is not listed as installed, so `claude plugin update`
+does not apply to it.
 
 ## What is in it
 
@@ -67,8 +68,8 @@ prompt, not a limit on its tools.
 
 ## Trust
 
-A plugin release runs on your machine: its hook runs before every shell command, and its agents run commands in your
-repo. Only Livingit's maintainers with write access to this repo can publish a release. A merge to `main` is a release: a
+An agent kit release runs on your machine: its hook runs before every shell command, and its agents run commands in
+your repo. Only Livingit's maintainers with write access to this repo can publish a release. A merge to `main` is a release: a
 new install or a marketplace update gets the head of `main`, and an existing install picks it up when `version` in
 `.claude-plugin/plugin.json` is raised. `main` is protected: changes go through a pull request, with no force push and no
 deletion. Versions are tagged (`v1.0.1` and on).
